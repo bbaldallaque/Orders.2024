@@ -1,5 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Orders.Backend.Data;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,6 +12,12 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<OrdersContext>(x => x.UseSqlServer("name=OrdersConnextion"));
 
 var app = builder.Build();
+
+app.UseCors(x => x
+   .AllowAnyMethod()
+   .AllowAnyHeader()
+   .SetIsOriginAllowed(origin => true)
+   .AllowCredentials());
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
